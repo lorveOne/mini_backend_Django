@@ -23,3 +23,8 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = '__all__'
         filterset_fields = ['customer_email', 'status', 'created_at']
+
+    def validate_total_price(self, value):
+        if value < 0:
+            raise serializers.ValidationError("Total price cannot be negative")
+        return value
